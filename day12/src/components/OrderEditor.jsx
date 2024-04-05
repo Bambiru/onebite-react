@@ -1,5 +1,6 @@
 // src/components/OrderEditor.jsx
 
+import { useRef } from "react";
 import { useState } from "react";
 
 const OrderEditor = () => {
@@ -10,10 +11,16 @@ const OrderEditor = () => {
   });
 
   const { menu, address, request } = orderMenu;
+  const addressRef = useRef();
+
   const onSubmit = () => {
-    alert(
-      `주문이 완료되었습니다. 메뉴 : ${menu}, 주소 : ${address} , 요청사항:${request}`
-    );
+    if (address === "") {
+      addressRef.current.focus();
+    } else {
+      alert(
+        `주문이 완료되었습니다. 메뉴 : ${menu}, 주소 : ${address} , 요청사항:${request}`
+      );
+    }
   };
 
   const setChangeMenu = (e) => {
@@ -40,6 +47,7 @@ const OrderEditor = () => {
       <div>
         <div style={{ marginBottom: 5, fontSize: 14 }}>배달 주소</div>
         <input
+          ref={addressRef}
           style={{ width: 300, padding: 5 }}
           placeholder="주소) 서울특별시 xx동 .."
           name="address"
